@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cliente")
 public class Cliente {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -28,6 +28,11 @@ public class Cliente {
 	public Set<Pedido> getPedidos() {
 		return pedidos;
 	}
+	
+	public Cliente(Integer id, String nome) {
+ 		this.id = id;
+		this.nome = nome;
+ 	}
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;

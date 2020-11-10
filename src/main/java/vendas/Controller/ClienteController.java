@@ -1,17 +1,52 @@
 package vendas.Controller;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import vendas.Entity.Cliente;
+import vendas.Repository.Clientes;
+
 @RestController
-@RequestMapping("api/clientes")
-public class ClienteController {
-    
-	@GetMapping
-	@RequestMapping(value = "hello/cli/{nome}")
-	public String helloCli(@PathVariable("nome")String nome) {
-		return String.format("olaaaa", nome);
+ public class ClienteController {
+	
+	@Autowired
+	private Clientes clienteRepository;
+	
+	public ClienteController(Clientes clienteRepository) {
+		this.clienteRepository = clienteRepository;
+ 	}
+
+	@GetMapping("/api/cliente/{id}")
+ 	public ResponseEntity<Cliente> getClientId(@PathVariable Integer id) {
+		 Optional<Cliente> cliente = clienteRepository.findById(id);
+		 
+		 if(cliente.isPresent()) {
+  			 return ResponseEntity.ok(cliente.get());
+		 }else {
+			 return ResponseEntity.notFound().build();
+		 }	 
 	}
+	 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
