@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import vendas.Entity.Cliente;
@@ -52,7 +54,31 @@ import vendas.Repository.Clientes;
 			return ResponseEntity.notFound().build();
 		}
  	}
+	
+	@ResponseBody
+	@PutMapping("/api/cliente/update/{id}")
+	public ResponseEntity<Object> update(@PathVariable Integer id , @RequestBody Cliente cliente) {
+	    return clienteRepository
+	    		.findById(id)
+	    		.map(clienteExistente -> {
+	    			cliente.setId(clienteExistente.getId());
+	    			clienteRepository.save(cliente);
+	    			return ResponseEntity.noContent().build();
+	    		}).orElseGet(() -> ResponseEntity.notFound().build());
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
