@@ -1,8 +1,6 @@
 package vendas.Controller;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -50,16 +48,16 @@ import vendas.Repository.Clientes;
  	}
 	
 	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Cliente> delete(@PathVariable Integer id){
-		Optional<Cliente> cliente = clienteRepository.findById(id);
-		
-		if(cliente.isPresent()) {
-		    clienteRepository.delete(cliente.get());
-			return ResponseEntity.noContent().build();
-		}else {
-			return ResponseEntity.notFound().build();
-		}
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("{id}")
+	public void delete(@PathVariable Integer id) {
+		clienteRepository.findById(id)
+		                 .map(clienteDelete -> {
+		                	 clienteRepository.deleteById(id);
+		                	 return ResponseEntity.ok().build();
+		                 }).orElse(ResponseEntity.notFound().build());
+		                 
+  		                 
  	}
 	
  	@PutMapping("/update/{id}")
