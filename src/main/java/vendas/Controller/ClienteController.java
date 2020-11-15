@@ -72,18 +72,16 @@ import vendas.Repository.Clientes;
 	    				"Cliente não encontrada"));
 	}
 	
- 	@SuppressWarnings("rawtypes")
-	@GetMapping
-	public ResponseEntity find(Cliente filtro){
+ 	@GetMapping
+	public List<Cliente> find(Cliente filtro){
 		ExampleMatcher matcher = ExampleMatcher
 				                .matching()
 				                .withIgnoreCase()
 				                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 		
-		Example exemple = Example.of(filtro, matcher);
-		List<Cliente> lista = clienteRepository.findAll(exemple);
-		return ResponseEntity.ok(lista);
-	}
+		Example<Cliente> exemple = Example.of(filtro, matcher);
+		 return clienteRepository.findAll(exemple);
+ 	}
 	
 }
 
