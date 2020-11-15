@@ -1,11 +1,13 @@
 package vendas.Controller;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import vendas.Entity.Cliente;
 import vendas.Repository.Clientes;
@@ -31,14 +34,12 @@ import vendas.Repository.Clientes;
  	}
 
 	@GetMapping("{id}")
- 	public ResponseEntity<Cliente> getClientId(@PathVariable Integer id) {
-		 Optional<Cliente> cliente = clienteRepository.findById(id);
-		 
-		 if(cliente.isPresent()) {
-  			 return ResponseEntity.ok(cliente.get());
-		 }else {
-			 return ResponseEntity.notFound().build();
-		 }	 
+ 	public Cliente getClientId(@PathVariable Integer id) {		 
+  		  return clienteRepository
+  					.findById(id)
+  					.orElseThrow(() -> 
+  					new ResponseStatusException(HttpStatus.NOT_FOUND,
+  							"Cliente não encontrado"));	  
 	}
 	 
 	@PostMapping
