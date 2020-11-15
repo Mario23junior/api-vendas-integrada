@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,10 +44,11 @@ import vendas.Repository.Clientes;
 	}
 	 
 	@PostMapping
-	public ResponseEntity<Cliente> save(@RequestBody Cliente cliente){
-		  Cliente saveCliente = clienteRepository.save(cliente);
-		  return ResponseEntity.ok(saveCliente);
-	}
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente save(@RequestBody Cliente cliente){
+		  return clienteRepository.save(cliente);
+ 	}
+	
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Cliente> delete(@PathVariable Integer id){
