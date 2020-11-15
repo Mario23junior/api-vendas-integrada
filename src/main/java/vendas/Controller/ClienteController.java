@@ -61,14 +61,15 @@ import vendas.Repository.Clientes;
  	}
 	
  	@PutMapping("/update/{id}")
-	public ResponseEntity<Object> update(@PathVariable Integer id , @RequestBody Cliente cliente) {
-	    return clienteRepository
+	public void update(@PathVariable Integer id , @RequestBody Cliente cliente) {
+	    clienteRepository
 	    		.findById(id)
 	    		.map(clienteExistente -> {
 	    			cliente.setId(clienteExistente.getId());
 	    			clienteRepository.save(cliente);
-	    			return ResponseEntity.noContent().build();
-	    		}).orElseGet(() -> ResponseEntity.notFound().build());
+	    			return clienteExistente;
+	    		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+	    				"Cliente não encontrada"));
 	}
 	
  	@SuppressWarnings("rawtypes")
