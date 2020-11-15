@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vendas.Entity.Cliente;
 import vendas.Repository.Clientes;
 
 @RestController
+@RequestMapping("/api/clientes/")
  public class ClienteController {
 	
 	@Autowired
@@ -30,7 +30,7 @@ import vendas.Repository.Clientes;
 		this.clienteRepository = clienteRepository;
  	}
 
-	@GetMapping("/api/cliente/{id}")
+	@GetMapping("{id}")
  	public ResponseEntity<Cliente> getClientId(@PathVariable Integer id) {
 		 Optional<Cliente> cliente = clienteRepository.findById(id);
 		 
@@ -41,13 +41,13 @@ import vendas.Repository.Clientes;
 		 }	 
 	}
 	 
-	@PostMapping("/api/cliente")
+	@PostMapping
 	public ResponseEntity<Cliente> save(@RequestBody Cliente cliente){
 		  Cliente saveCliente = clienteRepository.save(cliente);
 		  return ResponseEntity.ok(saveCliente);
 	}
 	
-	@DeleteMapping("/api/cliente/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Cliente> delete(@PathVariable Integer id){
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 		
@@ -59,8 +59,7 @@ import vendas.Repository.Clientes;
 		}
  	}
 	
-	@ResponseBody
-	@PutMapping("/api/cliente/update/{id}")
+ 	@PutMapping("/update/{id}")
 	public ResponseEntity<Object> update(@PathVariable Integer id , @RequestBody Cliente cliente) {
 	    return clienteRepository
 	    		.findById(id)
@@ -72,7 +71,7 @@ import vendas.Repository.Clientes;
 	}
 	
  	@SuppressWarnings("rawtypes")
-	@GetMapping("api/cliente/")
+	@GetMapping
 	public ResponseEntity find(Cliente filtro){
 		ExampleMatcher matcher = ExampleMatcher
 				                .matching()
