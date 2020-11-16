@@ -57,7 +57,53 @@ public class ProdutoController {
 		        		"Produto não encontrado"));
 	}
 	
+	@PutMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public Produto update(@PathVariable Integer id) {
+		   return produtoRepository
+		   .findById(id) 
+		   .orElseThrow(() -> 
+		      new ResponseStatusException(HttpStatus.NOT_FOUND,
+		    	  "Produto não encontrado"));
+		   
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
