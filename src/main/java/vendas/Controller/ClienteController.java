@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +37,7 @@ import vendas.Repository.Clientes;
   					.findById(id)
   					.orElseThrow(() -> 
   					new ResponseStatusException(HttpStatus.NOT_FOUND,
-  							"Cliente não encontrado"));	  
+  					"Cliente não encontrado"));	  
 	}
 	 
 	@PostMapping
@@ -53,14 +52,15 @@ import vendas.Repository.Clientes;
 	public void delete(@PathVariable Integer id) {
 		clienteRepository.findById(id)
 		                 .map(clienteDelete -> {
-		                	 clienteRepository.deleteById(id);
-		                	 return ResponseEntity.ok().build();
-		                 }).orElse(ResponseEntity.notFound().build());
+		                	 clienteRepository.delete(clienteDelete);
+		                	 return clienteDelete;
+ 		                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , 
+ 		                		 "Cliente não encontrado"));
 		                 
   		                 
  	}
 	
- 	@PutMapping("/update/{id}")
+ 	@PutMapping("update/{id}")
 	public void update(@PathVariable Integer id , @RequestBody Cliente cliente) {
 	    clienteRepository
 	    		.findById(id)
@@ -69,7 +69,7 @@ import vendas.Repository.Clientes;
 	    			clienteRepository.save(cliente);
 	    			return clienteExistente;
 	    		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-	    				"Cliente não encontrada"));
+	    				"Cliente não encontrado"));
 	}
 	
  	@GetMapping
