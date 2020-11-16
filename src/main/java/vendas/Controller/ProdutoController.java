@@ -24,13 +24,13 @@ public class ProdutoController {
 		 this.produtoRepository = produtosRepository;
 	}
 	
-	@PostMapping
+	@PostMapping("{id}")
 	@ResponseStatus(HttpStatus.CREATED)
  	public Produto save(@RequestBody Produto produto) {
 		return produtoRepository.save(produto);
 	}
 	
-	@PutMapping
+	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Integer id , @RequestBody Produto produto) {
 	      produtoRepository
@@ -44,7 +44,7 @@ public class ProdutoController {
 		    		  "Produto não encontrado"));
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
 		 produtoRepository
@@ -64,7 +64,7 @@ public class ProdutoController {
 		   .findById(id) 
 		   .orElseThrow(() -> 
 		      new ResponseStatusException(HttpStatus.NOT_FOUND,
-		    	  "Produto não encontrado"));
+		    	 "Produto não encontrado"));
 		   
 	}
 	
