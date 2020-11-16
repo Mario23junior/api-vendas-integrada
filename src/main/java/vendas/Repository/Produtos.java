@@ -2,8 +2,8 @@ package vendas.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import vendas.Entity.Pedido;
+import vendas.Entity.Produto;
 
-public interface Produtos extends JpaRepository<Pedido, Integer> {
+public interface Produtos extends JpaRepository<Produto, Integer> {
 
 }
