@@ -2,6 +2,7 @@ package vendas.Controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,13 @@ import vendas.Entity.Produto;
 import vendas.Repository.Produtos;
 
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping("/api/produtos/")
 public class ProdutoController {
-      
+    
 	private Produtos produtoRepository;
 	
-	public ProdutoController(Produtos produtosRepository) {
-		 this.produtoRepository = produtosRepository;
+	public ProdutoController(Produtos produtoRepository) {
+		 this.produtoRepository = produtoRepository;
 	}
 	
 	@PostMapping("{id}")
@@ -62,9 +63,9 @@ public class ProdutoController {
 		        		"Produto não encontrado"));
 	}
 	
-	@PutMapping("{id}")
+	@GetMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Produto update(@PathVariable Integer id) {
+	public Produto getById(@PathVariable Integer id) {
 		   return produtoRepository
 		   .findById(id) 
 		   .orElseThrow(() -> 
