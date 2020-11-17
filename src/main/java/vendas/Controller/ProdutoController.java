@@ -2,7 +2,6 @@ package vendas.Controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class ProdutoController {
 		 this.produtoRepository = produtoRepository;
 	}
 	
-	@PostMapping("{id}")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
  	public Produto save(@RequestBody Produto produto) {
 		return produtoRepository.save(produto);
@@ -64,7 +63,7 @@ public class ProdutoController {
 	}
 	
 	@GetMapping("{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
 	public Produto getById(@PathVariable Integer id) {
 		   return produtoRepository
 		   .findById(id) 
