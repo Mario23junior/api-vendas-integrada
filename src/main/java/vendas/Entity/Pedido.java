@@ -37,7 +37,6 @@ public class Pedido {
 	
 	
 	
-
 	
 	@Override
 	public String toString() {
@@ -73,6 +72,10 @@ public class Pedido {
 	}
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+	
+	public void setcliente() {
+ 		
 	}
 	
 	
