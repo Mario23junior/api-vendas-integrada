@@ -21,6 +21,7 @@ import vendas.Repository.ItemsPedido;
 import vendas.Repository.Pedidos;
 import vendas.Repository.Produtos;
 import vendas.Service.PedidoService;
+import vendas.enums.StatusPedido;
 
 @Service
 public class PedidoServicelmpl implements PedidoService {
@@ -50,6 +51,7 @@ public class PedidoServicelmpl implements PedidoService {
  		pedido.setTotal(dto.getTotal());
  		pedido.setDataPedido(LocalDate.now());
  		pedido.setCliente(cliente);
+ 		pedido.setStatus(StatusPedido.REALIZADO);
  		
  		List<ItemPedido> itemsPedido =  converterItems(pedido, dto.getItems());
  		pedidoRepository.save(pedido);

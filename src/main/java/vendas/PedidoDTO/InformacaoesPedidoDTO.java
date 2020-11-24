@@ -13,20 +13,23 @@ public class InformacaoesPedidoDTO {
 	private String nomeCliente;
 	private String dataPedido;
 	private BigDecimal total;
+	private String status;
 	private List<InformacaoesItemsPedidoDTO> items;
 	
 	public InformacaoesPedidoDTO() {
+		
 	}
 
 
 	public InformacaoesPedidoDTO(Integer codigo, String cpf, String nomeCliente, String dataPedido, BigDecimal total,
-			List<InformacaoesItemsPedidoDTO> items) {
+			String status, List<InformacaoesItemsPedidoDTO> items) {
 		super();
 		this.codigo = codigo;
 		this.cpf = cpf;
 		this.nomeCliente = nomeCliente;
 		this.dataPedido = dataPedido;
 		this.total = total;
+		this.status = status;
 		this.items = items;
 	}
 
@@ -78,8 +81,16 @@ public class InformacaoesPedidoDTO {
 		this.dataPedido = dataPedido;
 	}
 
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	
 
 }
