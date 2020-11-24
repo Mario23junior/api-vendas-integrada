@@ -63,7 +63,7 @@ import vendas.Repository.Clientes;
  	}
 	
  	@PutMapping("update/{id}")
-	public void update(@PathVariable Integer id , @RequestBody Cliente cliente) {
+	public void update(@Valid @PathVariable Integer id , @RequestBody Cliente cliente) {
 	    clienteRepository
 	    		.findById(id)
 	    		.map(clienteExistente -> {
