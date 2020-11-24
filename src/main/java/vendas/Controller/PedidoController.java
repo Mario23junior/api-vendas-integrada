@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import vendas.Entity.ItemPedido;
 import vendas.Entity.Pedido;
+import vendas.PedidoDTO.AtualizacaoStatusPedidoDTO;
 import vendas.PedidoDTO.InformacaoesItemsPedidoDTO;
 import vendas.PedidoDTO.InformacaoesPedidoDTO;
 import vendas.PedidoDTO.PedidoDTO;
 import vendas.Service.PedidoService;
+import vendas.enums.StatusPedido;
 
 @RestController
 @RequestMapping("/api/pedidos/")
@@ -75,8 +78,47 @@ public class PedidoController {
 				     .build()
 		).collect(Collectors.toList());
 	}
+	
+	@PatchMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateStatus(@PathVariable Integer id,
+			                 @RequestBody AtualizacaoStatusPedidoDTO dto) {
+		String novoStatus = dto.getNovoStatus();
+		service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
+ 		
+	  	
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

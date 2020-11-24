@@ -3,7 +3,7 @@ package vendas.enums;
 public enum StatusPedido {
      
 	REALIZADO,
-	CALCELADO;
+	CANCELADO;
 	
 	private StatusPedido() {
  	}

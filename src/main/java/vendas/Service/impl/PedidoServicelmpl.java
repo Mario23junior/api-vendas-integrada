@@ -13,6 +13,7 @@ import vendas.Entity.Cliente;
 import vendas.Entity.ItemPedido;
 import vendas.Entity.Pedido;
 import vendas.Entity.Produto;
+import vendas.Exception.PedidoNaoEncontradoException;
 import vendas.Exception.RegrasNegocioException;
 import vendas.PedidoDTO.ItemPedidoDTO;
 import vendas.PedidoDTO.PedidoDTO;
@@ -92,6 +93,17 @@ public class PedidoServicelmpl implements PedidoService {
 	@Override
 	public Optional<Pedido> obterPedidoCompleto(Integer id) {
  		return pedidoRepository.findByIdFetchItens(id) ;
+	}
+
+	@Override
+	@Transactional
+	public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+		pedidoRepository
+ 		             .findById(id)
+ 		             .map(pedido -> {
+ 		            	 pedido.setStatus(statusPedido);
+ 		            	 return pedidoRepository.save(pedido);
+ 		             }).orElseThrow(() -> new PedidoNaoEncontradoException());
 	}
 	
 }
