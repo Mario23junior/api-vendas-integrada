@@ -20,7 +20,6 @@ public class ApiErrors {
 		this.errors = errors;
 	}
 
-	 
 	
     
 }

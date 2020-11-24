@@ -2,6 +2,7 @@ package vendas.Service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -85,6 +86,11 @@ public class PedidoServicelmpl implements PedidoService {
  					
  				}).collect(Collectors.toList());
  	}
+
+	@Override
+	public Optional<Pedido> obterPedidoCompleto(Integer id) {
+ 		return pedidoRepository.findByIdFetchItens(id) ;
+	}
 	
 }
 
