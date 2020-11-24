@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,7 +28,9 @@ public class Cliente {
 	@NotEmpty(message = "Campo nome e o brigatorio")
 	private String nome;
 	
+	@CPF(message = "informe um CPF valido")
 	@Column(name = "cpf", length = 11)
+	@NotEmpty(message =  "Campo CPF e obrigatorio")
 	private String cpf;
 	
 	@JsonIgnore
