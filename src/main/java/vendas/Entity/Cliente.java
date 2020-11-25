@@ -25,12 +25,12 @@ public class Cliente {
 	private Integer id;
 
 	@Column(name = "nome", length = 100)
-	@NotEmpty(message = "Campo nome e o brigatorio")
+	@NotEmpty(message = "{campo.nome.obrigatorio}")
 	private String nome;
 	
-	@CPF(message = "informe um CPF valido")
+	@CPF(message = "{campo.cpf.invalido}")
 	@Column(name = "cpf", length = 11)
-	@NotEmpty(message =  "Campo CPF e obrigatorio")
+	@NotEmpty(message =  "{campo.cpf.obrigatorio}")
 	private String cpf;
 	
 	@JsonIgnore
