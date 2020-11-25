@@ -87,47 +87,7 @@ public class PedidoController {
 			                 @RequestBody AtualizacaoStatusPedidoDTO dto) {
 		String novoStatus = dto.getNovoStatus();
 		service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
- 		
-	  	
+ 		 	
 	}
-	
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
