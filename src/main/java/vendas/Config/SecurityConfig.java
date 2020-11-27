@@ -27,7 +27,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		   .passwordEncoder(passwordEncoder())
 		   .withUser("fulano")
 		   .password(passwordEncoder().encode("123"))
-		   .roles("USER");
+		   .roles("USER","ADMIN");
 	}
     
 	// URLS Autorização dos dados para nevegação api por cliente / definir validação
@@ -37,7 +37,14 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		   .csrf().disable()
 		   .authorizeRequests()
 		       .antMatchers("/api/clientes/**")
-		          .permitAll()
+		          .hasAnyRole("USER","ADMIN")
+		          
+		       .antMatchers("/api/produtos/**")
+		          .hasRole("ADMIN")
+		          
+		       .antMatchers("/api/pedidos/**")
+		          .hasRole("ADMIN")
+		          
 		   .and()
 		          .formLogin();
 		    
