@@ -46,7 +46,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		          .hasRole("ADMIN")
 		          
 		   .and()
-		          .formLogin();
+		        .httpBasic();
 		    
 	}
 }
