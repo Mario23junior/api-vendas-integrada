@@ -30,9 +30,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		   .roles("USER");
 	}
     
-	// Autorização dos dados para nevegação api por cliente / definir validação
+	// URLS Autorização dos dados para nevegação api por cliente / definir validação
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 super.configure(http);
+		 http
+		   .csrf().disable()
+		   .authorizeRequests()
+		       .antMatchers("/api/clientes/**")
+		          .permitAll()
+		   .and()
+		          .formLogin();
+		    
 	}
 }
