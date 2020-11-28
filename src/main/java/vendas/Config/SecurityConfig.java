@@ -7,9 +7,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import vendas.Security.jwt.JwtAuthFilter;
+import vendas.Security.jwt.JwtService;
 import vendas.Service.impl.UsuarioServicelmpl;
 
 @EnableWebSecurity
@@ -18,6 +23,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UsuarioServicelmpl usuarioService;
 	
+	@Autowired
+	private JwtService jwtService;
+	
 	
 	// criptografando  e descriptografando
 	@Bean
@@ -25,6 +33,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
     }
 	
+	
+	@Bean
+	public OncePerRequestFilter jwtFilter() {
+		return new JwtAuthFilter(jwtService, usuarioService);
+	}
 	
 	// autenticando dados recebidos do cliente
 	@Override
@@ -54,7 +67,20 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 		          .anyRequest().authenticated()
 		          
 		   .and()
-		        .httpBasic();
+		   
+		     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		 .and()
+		    .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+
 		    
 	}
 }
+
+
+
+
+
+
+
+
+
