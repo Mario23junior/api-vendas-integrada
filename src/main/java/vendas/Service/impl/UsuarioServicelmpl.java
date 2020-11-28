@@ -7,9 +7,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import vendas.Entity.Usuario;
+import vendas.Exception.SenhaInvalidaException;
 import vendas.Repository.UsuarioRepository;
 
 @Service
@@ -19,9 +21,25 @@ public class UsuarioServicelmpl implements UserDetailsService  {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@Transactional
 	public Usuario salvarUser(Usuario usuario) {
 		return usuarioRepository.save(usuario);
+	}
+	
+	
+	public UserDetails autenticar(Usuario usuario) {
+		UserDetails user = loadUserByUsername(usuario.getLogin());
+		boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+		  
+		if(senhasBatem) {
+			return user;
+		}
+		
+		  throw new SenhaInvalidaException();
+		
 	}
 	
 	@Override
