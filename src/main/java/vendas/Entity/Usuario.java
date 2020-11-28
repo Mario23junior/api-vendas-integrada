@@ -30,14 +30,16 @@ public class Usuario {
 	public Usuario() {
 		
  	}
-	
 
-	public Usuario(Integer id, String login, String senha) {
+	public Usuario(Integer id, @NotEmpty(message = "{campo.login.obrigatorio}") String login,
+			@NotEmpty(message = "{campo.senha.obrigatorio}") String senha, boolean admin) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
+		this.admin = admin;
 	}
+
 
 
 
@@ -74,8 +76,6 @@ public class Usuario {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
-	
-	
-	
+
+
 }
